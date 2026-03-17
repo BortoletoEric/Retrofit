@@ -5,8 +5,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private val postService = RetrofitClient.createService(PostService::class.java)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -16,5 +21,21 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val call = postService.list()
+        call.enqueue(object : Callback<List<PostEntity>> {
+            override fun onResponse(
+                call: retrofit2.Call<List<PostEntity>?>, response: Response<List<PostEntity>>
+            ) {
+                val s = ""
+            }
+
+            override fun onFailure(
+                call: retrofit2.Call<List<PostEntity>>, t:  Throwable
+            ) {
+                val s = ""
+            }
+        })
+
     }
 }
